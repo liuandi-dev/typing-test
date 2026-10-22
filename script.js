@@ -20,7 +20,7 @@ let started = false;    // 测试是否已开始
 let finished = false;   // 测试是否已结束
 let timeLeft = TOTAL_SECONDS;
 let timerId = null;     // 倒计时的身份证（番茄钟同款管理方式）
-
+let counting = false
 const $ = (id) => document.getElementById(id);
 
 // 把原文渲染成一堆 span，一开始全部是 pending（灰色）
@@ -45,16 +45,21 @@ function startTest() {
   renderText();
   updateSpans(0);
 
-  timerId = setInterval(() => {
-    timeLeft--;
-    $("time-left").textContent = timeLeft;
-    if (timeLeft <= 0) finishTest();
-  }, 1000);
+   counting = false;   // 新一轮，枪还没响
+  $("comment").textContent = "准备就绪，敲第一个字开始计时！";
 }
 
 // 功能③：每次输入，逐字对比并给原文上色
 function onInput() {
   if (!started || finished) return;
+   if (!counting) {
+    counting = true;    // 第一次敲键：起跑！
+    timerId = setInterval(() => {
+      timeLeft--;
+      $("time-left").textContent = timeLeft;
+      if (timeLeft <= 0) finishTest();
+    }, 1000);
+  }
   const typed = $("input-area").value;
   updateSpans(typed.length);
   // 提前打完全文：直接结束，WPM 按实际用时折算
