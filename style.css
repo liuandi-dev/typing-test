@@ -1,0 +1,148 @@
+/* ===== 全局重置 + 主题变量（延续靛蓝体系） ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --accent: #6366f1;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --pending: #9ca3af;
+  --ok: #059669;
+  --error: #dc2626;
+  --bg: #f9fafb;
+  --card: #ffffff;
+  --border: #e5e7eb;
+}
+
+body {
+  font-family: system-ui, "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header { text-align: center; padding: 40px 20px 8px; }
+header h1 { font-size: 28px; }
+.subtitle { color: var(--muted); margin-top: 4px; }
+
+main {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+  flex: 1;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08);
+}
+
+/* 控制条：按钮和倒计时左右分布 */
+.control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.countdown {
+  font-size: 15px;
+  color: var(--muted);
+}
+#time-left {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 32px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.btn-primary:hover { transform: translateY(-2px); }
+
+/* 原文区：字号大一点，行高宽松，逐字着色 */
+.text-display {
+  font-size: 18px;
+  line-height: 2;
+  letter-spacing: 0.5px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  min-height: 120px;
+}
+/* 三个状态类：由 script.js 在每次输入时给每个字的 span 加/换 */
+.text-display .pending { color: var(--pending); }
+.text-display .correct { color: var(--ok); }
+.text-display .wrong   { color: var(--error); text-decoration: underline; }
+/* 当前应该打的那个字：底下一条靛蓝小光标 */
+.text-display .current {
+  border-bottom: 3px solid var(--accent);
+  animation: blink 1s infinite;
+}
+@keyframes blink { 50% { border-color: transparent; } }
+
+#input-area {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+}
+#input-area:focus { border-color: var(--accent); }
+#input-area:disabled { background: var(--bg); color: var(--muted); }
+
+/* 成绩区：三个数字并排 */
+.scores {
+  display: flex;
+  gap: 16px;
+  text-align: center;
+}
+.score { flex: 1; }
+.score .num {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.score .label { font-size: 12px; color: var(--muted); }
+
+.comment {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--muted);
+  min-height: 22px;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--muted);
+}
+footer a { color: var(--accent); text-decoration: none; }
+
+@media (max-width: 480px) {
+  .scores { flex-direction: column; gap: 8px; }
+  .score .num { font-size: 32px; }
+}
